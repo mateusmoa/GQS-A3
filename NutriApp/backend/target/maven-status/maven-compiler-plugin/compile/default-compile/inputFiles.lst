@@ -1,0 +1,15 @@
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\controller\RecipeController.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\service\QRCodeService.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\NutriAppApplication.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\service\RecipeService.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\controller\IngredientController.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\dto\NutritionTable.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\repository\IngredientRepository.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\entity\RecipeIngredient.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\controller\NutritionTableController.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\repository\RecipeRepository.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\service\IngredientService.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\service\NutritionCalculationService.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\entity\Ingredient.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\config\CorsConfig.java
+c:\Users\ALMAJ\NutriApp\backend\src\main\java\com\nutriapp\entity\Recipe.java

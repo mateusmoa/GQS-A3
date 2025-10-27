@@ -1,0 +1,16 @@
+com\nutriapp\controller\RecipeController.class
+com\nutriapp\repository\RecipeRepository.class
+com\nutriapp\dto\NutritionTable.class
+com\nutriapp\service\RecipeService.class
+com\nutriapp\service\QRCodeService.class
+com\nutriapp\entity\RecipeIngredient.class
+com\nutriapp\NutriAppApplication.class
+com\nutriapp\service\NutritionCalculationService.class
+com\nutriapp\service\IngredientService.class
+com\nutriapp\controller\NutritionTableController.class
+com\nutriapp\controller\IngredientController.class
+com\nutriapp\config\CorsConfig$1.class
+com\nutriapp\entity\Ingredient.class
+com\nutriapp\entity\Recipe.class
+com\nutriapp\config\CorsConfig.class
+com\nutriapp\repository\IngredientRepository.class

@@ -1,0 +1,74 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: nutriapp
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/nutriapp_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: nutriapp_user
+    password: nutriapp2024
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: true
+  
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+  
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Configurações NutriApp
+nutriapp:
+  anvisa:
+    version: "RDC-429-2020"
+    daily-values:
+      energy-kcal: 2000
+      carbohydrates: 300
+      total-sugars: 50
+      added-sugars: 50
+      proteins: 50
+      total-fats: 55
+      saturated-fats: 22
+      dietary-fiber: 25
+      sodium: 2400
+  
+  export:
+    temp-directory: ${java.io.tmpdir}/nutriapp-exports
+    max-cache-size: 1000
+    cache-ttl-seconds: 3600
+
+# Swagger/OpenAPI
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+logging:
+  level:
+    com.nutriapp: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/nutriapp.log
