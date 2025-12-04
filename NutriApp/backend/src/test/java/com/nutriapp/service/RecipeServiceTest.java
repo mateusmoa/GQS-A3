@@ -4,6 +4,7 @@ import com.nutriapp.entity.Recipe;
 import com.nutriapp.entity.RecipeIngredient;
 import com.nutriapp.repository.RecipeRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,6 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Teste unitário: RecipeService")
 class RecipeServiceTest {
 
     @Mock
@@ -27,6 +29,7 @@ class RecipeServiceTest {
     private RecipeService recipeService;
 
     @Test
+    @DisplayName("salvar receita válida define relações e salva")
     void save_validRecipe_setsRelationAndSaves() {
         Recipe r = new Recipe();
         r.setName("Receita");
@@ -50,6 +53,7 @@ class RecipeServiceTest {
     }
 
     @Test
+    @DisplayName("salvar sem nome lança exceção")
     void save_missingName_throws() {
         Recipe r = new Recipe();
         r.setTotalPortion(BigDecimal.valueOf(100));
@@ -60,6 +64,7 @@ class RecipeServiceTest {
     }
 
     @Test
+    @DisplayName("findById existente retorna receita")
     void findById_existing_returnsRecipe() {
         Recipe r = new Recipe(); r.setId(2L); r.setName("R");
         when(recipeRepository.findByIdWithIngredients(2L)).thenReturn(Optional.of(r));

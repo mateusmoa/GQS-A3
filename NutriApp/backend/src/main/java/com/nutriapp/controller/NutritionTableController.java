@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/nutrition")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Tabela Nutricional", description = "API para cálculo e exportação de tabelas nutricionais")
@@ -90,7 +89,7 @@ public class NutritionTableController {
             Recipe recipe = recipeService.findById(recipeId);
             NutritionTable table = calculationService.calculateRecipeNutrition(recipe);
             
-            // Placeholder - implementar geração real de PDF/Excel/HTML
+            
             byte[] exportData = generateExport(table, format);
             
             HttpHeaders headers = new HttpHeaders();
@@ -118,7 +117,6 @@ public class NutritionTableController {
         return ResponseEntity.ok("NutriApp Nutrition Service is running");
     }
     
-    // Helper methods
     
     private MediaType getMediaType(String format) {
         return switch (format.toUpperCase()) {
@@ -139,7 +137,7 @@ public class NutritionTableController {
     }
     
     private byte[] generateExport(NutritionTable table, String format) {
-        // Placeholder - implementar geração real
+        
         String content = String.format("Tabela Nutricional - %s\nFormato: %s\n", 
             table.getRecipeName(), format);
         return content.getBytes();

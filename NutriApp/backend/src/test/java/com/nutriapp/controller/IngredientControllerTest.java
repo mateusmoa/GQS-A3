@@ -5,6 +5,7 @@ import com.nutriapp.entity.Ingredient;
 import com.nutriapp.service.IngredientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Teste de controlador: IngredientController")
 class IngredientControllerTest {
 
     private MockMvc mockMvc;
@@ -43,6 +45,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/ingredients retorna lista de ingredientes")
     void getAll_returnsList() throws Exception {
         Ingredient a = new Ingredient(); a.setId(1L); a.setName("A"); a.setPortionUnit("g");
         when(ingredientService.findAll()).thenReturn(List.of(a));
@@ -53,6 +56,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/ingredients/{id} quando encontrado retorna 200")
     void getById_found_returnsOk() throws Exception {
         Ingredient a = new Ingredient(); a.setId(1L); a.setName("A"); a.setPortionUnit("g");
         when(ingredientService.findById(1L)).thenReturn(Optional.of(a));
@@ -63,6 +67,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("POST /api/ingredients válido retorna Created e chama service com payload correto")
     void create_valid_returnsCreated_andCallsServiceWithCorrectPayload() throws Exception {
         Ingredient in = new Ingredient(); in.setName("X"); in.setPortionUnit("g");
         Ingredient saved = new Ingredient(); saved.setId(10L); saved.setName("X"); saved.setPortionUnit("g");
@@ -80,6 +85,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("POST /api/ingredients inválido retorna Bad Request")
     void create_invalid_returnsBadRequest() throws Exception {
         Ingredient in = new Ingredient(); // missing name
 
@@ -90,6 +96,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE /api/ingredients/{id} existente retorna OK")
     void delete_existing_returnsOk() throws Exception {
         when(ingredientService.findById(1L)).thenReturn(Optional.of(new Ingredient()));
 
@@ -100,6 +107,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE /api/ingredients/{id} inexistente retorna Not Found")
     void delete_notFound_returnsNotFound() throws Exception {
         when(ingredientService.findById(2L)).thenReturn(Optional.empty());
 
@@ -110,6 +118,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("PUT /api/ingredients/{id} válido retorna OK")
     void update_valid_returnsOk() throws Exception {
         Ingredient in = new Ingredient(); in.setName("Updated"); in.setPortionUnit("g");
         Ingredient updated = new Ingredient(); updated.setId(5L); updated.setName("Updated");
@@ -123,6 +132,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("PUT /api/ingredients/{id} inexistente retorna Not Found")
     void update_notFound_returnsNotFound() throws Exception {
         Ingredient in = new Ingredient(); in.setName("Nope"); in.setPortionUnit("g");
         when(ingredientService.update(eq(99L), any(Ingredient.class))).thenThrow(new RuntimeException("not found"));
@@ -134,6 +144,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/ingredients/search retorna lista de resultados")
     void search_returnsList() throws Exception {
         Ingredient a = new Ingredient(); a.setId(3L); a.setName("Foo"); a.setPortionUnit("g");
         when(ingredientService.searchIngredients("foo")).thenReturn(List.of(a));
@@ -144,6 +155,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/ingredients/count retorna o número total de ingredientes")
     void count_returnsNumber() throws Exception {
         when(ingredientService.getTotalCount()).thenReturn(42L);
 
@@ -153,6 +165,7 @@ class IngredientControllerTest {
     }
 
     @Test
+    @DisplayName("GET /api/ingredients/categories retorna lista de categorias")
     void categories_returnsList() throws Exception {
         when(ingredientService.getAllCategories()).thenReturn(List.of("Cat1", "Cat2"));
 

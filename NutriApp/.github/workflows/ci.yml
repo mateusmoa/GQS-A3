@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: {}
+
+jobs:
+  backend-tests:
+    name: Backend - Testes (Maven)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        # Intencional: CI fixado para Java 17 (versão suportada/compatível com o backend)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Maven local repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2-
+
+      - name: Run backend tests
+        run: mvn -B -f backend/pom.xml test
+
+  frontend-build:
+    name: Frontend - Build (Node)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Build frontend
+        run: |
+          npm --prefix frontend run build

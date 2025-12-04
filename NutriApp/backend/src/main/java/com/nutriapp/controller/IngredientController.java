@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/ingredients")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Ingredientes", description = "API para gerenciamento de ingredientes (TBCA)")
@@ -71,11 +70,16 @@ public class IngredientController {
     
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar ingrediente")
-    public ResponseEntity<Void> deleteIngredient(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteIngredient(@PathVariable Long id) {
         log.info("DELETE /api/ingredients/{} - Deletar ingrediente", id);
         if (ingredientService.findById(id).isPresent()) {
-            ingredientService.deleteById(id);
-            return ResponseEntity.ok().build();
+            try {
+                ingredientService.deleteById(id);
+                return ResponseEntity.ok().build();
+            } catch (com.nutriapp.exception.IngredientInUseException ex) {
+                log.warn("Tentativa de deletar ingrediente em uso: {}", id);
+                return ResponseEntity.status(409).body(ex.getMessage());
+            }
         }
         return ResponseEntity.notFound().build();
     }

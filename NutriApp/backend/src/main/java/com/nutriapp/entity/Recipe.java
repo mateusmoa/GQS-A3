@@ -1,5 +1,6 @@
 package com.nutriapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,14 +32,14 @@ public class Recipe {
     
     @NotNull(message = "Método de preparo é obrigatório")
     @Column(name = "preparation_method", nullable = false, length = 20)
-    private String preparationMethod; // RAW, BOILED, FRIED, BAKED, GRILLED, STEAMED
+    private String preparationMethod; 
     
     @NotNull(message = "Porção total é obrigatória")
     @Column(name = "total_portion", precision = 8, scale = 2, nullable = false)
     private BigDecimal totalPortion;
     
     @Column(name = "portion_unit", nullable = false, length = 2)
-    private String portionUnit; // "g" ou "ml"
+    private String portionUnit;
     
     private Integer servings;
     
@@ -46,6 +47,7 @@ public class Recipe {
     private String instructions;
     
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<RecipeIngredient> ingredients = new ArrayList<>();
     
     @CreationTimestamp
@@ -56,7 +58,6 @@ public class Recipe {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
-    // Helper methods
     public void addIngredient(RecipeIngredient ingredient) {
         ingredients.add(ingredient);
         ingredient.setRecipe(this);

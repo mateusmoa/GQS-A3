@@ -3,6 +3,7 @@ package com.nutriapp.service;
 import com.nutriapp.entity.Ingredient;
 import com.nutriapp.repository.IngredientRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,6 +18,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("Teste unitário: IngredientService")
 class IngredientServiceTest {
 
     @Mock
@@ -26,6 +28,7 @@ class IngredientServiceTest {
     private IngredientService ingredientService;
 
     @Test
+    @DisplayName("salvar ingrediente válido chama save e retorna")
     void save_validIngredient_callsSaveAndReturn() {
         Ingredient ing = new Ingredient();
         ing.setName("Teste");
@@ -47,6 +50,7 @@ class IngredientServiceTest {
     }
 
     @Test
+    @DisplayName("salvar sem nome lança IllegalArgumentException")
     void save_missingName_throwsIllegalArgumentException() {
         Ingredient ing = new Ingredient();
         ing.setPortionUnit("g");
@@ -57,6 +61,7 @@ class IngredientServiceTest {
     }
 
     @Test
+    @DisplayName("salvar com unidade inválida lança IllegalArgumentException")
     void save_invalidPortionUnit_throwsIllegalArgumentException() {
         Ingredient ing = new Ingredient();
         ing.setName("X");
@@ -67,6 +72,7 @@ class IngredientServiceTest {
     }
 
     @Test
+    @DisplayName("findAll delega para o repositório")
     void findAll_delegatesToRepository() {
         Ingredient a = new Ingredient(); a.setId(1L); a.setName("A");
         Ingredient b = new Ingredient(); b.setId(2L); b.setName("B");
@@ -79,6 +85,7 @@ class IngredientServiceTest {
     }
 
     @Test
+    @DisplayName("findById delega para o repositório")
     void findById_delegatesToRepository() {
         Ingredient a = new Ingredient(); a.setId(1L); a.setName("A");
         when(ingredientRepository.findById(1L)).thenReturn(Optional.of(a));

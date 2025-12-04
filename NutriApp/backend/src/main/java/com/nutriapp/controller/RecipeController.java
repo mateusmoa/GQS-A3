@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipes")
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Receitas", description = "API para gerenciamento de receitas")
