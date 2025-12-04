@@ -1,0 +1,11 @@
+com\nutriapp\controller\IngredientControllerTest.class
+com\nutriapp\controller\RecipeControllerTest.class
+com\nutriapp\service\RecipeServiceTest.class
+com\nutriapp\controller\NutritionTableControllerTest.class
+com\nutriapp\service\IngredientServiceTest.class
+com\nutriapp\repository\IngredientRepositoryIntegrationTest.class
+com\nutriapp\controller\RecipeControllerIntegrationTest.class
+com\nutriapp\service\NutritionCalculationServiceTest.class
+com\nutriapp\service\QRCodeServiceTest.class
+com\nutriapp\controller\IngredientControllerIntegrationTest.class
+com\nutriapp\repository\RecipeRepositoryIntegrationTest.class

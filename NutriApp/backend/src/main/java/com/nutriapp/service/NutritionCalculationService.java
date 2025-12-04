@@ -42,9 +42,8 @@ public class NutritionCalculationService {
         "STEAMED", Map.of("fat", new BigDecimal("0.97"), "protein", new BigDecimal("0.98"), "vitamin", new BigDecimal("0.9"))
     );
     
-    /**
-     * Calcula a tabela nutricional completa de uma receita
-     */
+   // Calcula a tabela nutricional completa de uma receita
+    
     public NutritionTable calculateRecipeNutrition(Recipe recipe) {
         log.info("Iniciando cálculo nutricional para receita: {} (ID: {})", recipe.getName(), recipe.getId());
         
@@ -150,9 +149,8 @@ public class NutritionCalculationService {
         return table;
     }
     
-    /**
-     * Calcula os percentuais de Valor Diário (%VD) conforme ANVISA
-     */
+    // Calcula os percentuais de Valor Diário (%VD) conforme ANVISA
+
     private void calculateDailyValues(NutritionTable table) {
         table.setEnergyDV(calculatePercentage(table.getEnergyKcal(), DAILY_VALUES.get("energyKcal")));
         table.setCarbohydratesDV(calculatePercentage(table.getCarbohydrates(), DAILY_VALUES.get("carbohydrates")));
@@ -165,9 +163,8 @@ public class NutritionCalculationService {
         table.setSodiumDV(calculatePercentage(table.getSodium(), DAILY_VALUES.get("sodium")));
     }
     
-    /**
-     * Calcula percentual em relação ao valor de referência
-     */
+    // Calcula percentual em relação ao valor de referência
+
     private BigDecimal calculatePercentage(BigDecimal value, BigDecimal reference) {
         if (value == null || reference.equals(BigDecimal.ZERO)) {
             return BigDecimal.ZERO;
@@ -177,9 +174,8 @@ public class NutritionCalculationService {
                     .setScale(1, RoundingMode.HALF_UP);
     }
     
-    /**
-     * Multiplicação segura (trata valores null)
-     */
+    // Multiplicação segura (trata valores null)
+  
     private BigDecimal safeMultiply(BigDecimal value, BigDecimal multiplier) {
         return value != null ? value.multiply(multiplier) : BigDecimal.ZERO;
     }

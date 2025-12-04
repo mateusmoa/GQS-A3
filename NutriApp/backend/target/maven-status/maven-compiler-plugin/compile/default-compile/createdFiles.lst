@@ -2,6 +2,7 @@ com\nutriapp\controller\RecipeController.class
 com\nutriapp\repository\RecipeRepository.class
 com\nutriapp\dto\NutritionTable.class
 com\nutriapp\service\RecipeService.class
+com\nutriapp\exception\IngredientInUseException.class
 com\nutriapp\service\QRCodeService.class
 com\nutriapp\entity\RecipeIngredient.class
 com\nutriapp\NutriAppApplication.class

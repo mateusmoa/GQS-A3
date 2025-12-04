@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
+import com.nutriapp.exception.IngredientInUseException;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +49,14 @@ public class IngredientService {
     
     public void deleteById(Long id) {
         log.info("Deletando ingrediente ID: {}", id);
-        ingredientRepository.deleteById(id);
+        try {
+            ingredientRepository.deleteById(id);
+            
+            ingredientRepository.flush();
+        } catch (DataIntegrityViolationException ex) {
+            log.warn("Falha ao deletar ingrediente ID {}: referência encontrada", id);
+            throw new IngredientInUseException("Ingrediente não pode ser excluído porque está associado a uma ou mais receitas.");
+        }
     }
     
     public List<Ingredient> searchByName(String name) {

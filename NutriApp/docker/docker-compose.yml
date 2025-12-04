@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: nutriapp-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass2024
+      MYSQL_DATABASE: nutriapp_db
+      MYSQL_USER: nutriapp_user
+      MYSQL_PASSWORD: nutriapp2024
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ../database/data-tbca.sql:/docker-entrypoint-initdb.d/2-data.sql
+    networks:
+      - nutriapp-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../docker/Dockerfile.backend
+    container_name: nutriapp-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/nutriapp_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: nutriapp_user
+      SPRING_DATASOURCE_PASSWORD: nutriapp2024
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - nutriapp-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/Dockerfile.frontend
+      args:
+        VITE_API_BASE_URL: http://nutriapp-backend:8080/api
+    container_name: nutriapp-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - nutriapp-network
+
+networks:
+  nutriapp-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
